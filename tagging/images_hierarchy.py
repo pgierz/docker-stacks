@@ -2,30 +2,16 @@
 # Distributed under the terms of the Modified BSD License.
 from dataclasses import dataclass, field
 from typing import Optional
-from .taggers import (
-    TaggerInterface,
-    SHATagger,
-    DateTagger,
-    UbuntuVersionTagger,
-    PythonVersionTagger,
-    JupyterNotebookVersionTagger,
-    JupyterLabVersionTagger,
-    JupyterHubVersionTagger,
-    RVersionTagger,
-    TensorflowVersionTagger,
-    JuliaVersionTagger,
-    SparkVersionTagger,
-    HadoopVersionTagger,
-    JavaVersionTagger,
-)
-from .manifests import (
-    ManifestInterface,
-    CondaEnvironmentManifest,
-    AptPackagesManifest,
-    RPackagesManifest,
-    JuliaPackagesManifest,
-    SparkInfoManifest,
-)
+
+from .manifests import (AptPackagesManifest, CondaEnvironmentManifest,
+                        JuliaPackagesManifest, ManifestInterface,
+                        RPackagesManifest, SparkInfoManifest)
+from .taggers import (DateTagger, HadoopVersionTagger, JavaVersionTagger,
+                      JuliaVersionTagger, JupyterHubVersionTagger,
+                      JupyterLabVersionTagger, JupyterNotebookVersionTagger,
+                      PythonVersionTagger, RVersionTagger, SHATagger,
+                      SparkVersionTagger, TaggerInterface,
+                      TensorflowVersionTagger, UbuntuVersionTagger)
 
 
 @dataclass
@@ -61,6 +47,11 @@ ALL_IMAGES = {
     ),
     "datascience-notebook": ImageDescription(
         parent_image="scipy-notebook",
+        taggers=[RVersionTagger, JuliaVersionTagger],
+        manifests=[RPackagesManifest, JuliaPackagesManifest],
+    ),
+    "datascience-viz-notebook": ImageDescription(
+        parent_image="datascience-notebook",
         taggers=[RVersionTagger, JuliaVersionTagger],
         manifests=[RPackagesManifest, JuliaPackagesManifest],
     ),
