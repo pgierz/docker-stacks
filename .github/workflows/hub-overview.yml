@@ -11,6 +11,7 @@ on:
       - "all-spark-notebook/README.md"
       - "base-notebook/README.md"
       - "datascience-notebook/README.md"
+      - "datascience-viz-notebook/README.md"
       - "minimal-notebook/README.md"
       - "pyspark-notebook/README.md"
       - "r-notebook/README.md"
