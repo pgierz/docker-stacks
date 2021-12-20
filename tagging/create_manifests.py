@@ -5,11 +5,11 @@ import argparse
 import datetime
 import logging
 import os
+
 from .docker_runner import DockerRunner
 from .get_taggers_and_manifests import get_taggers_and_manifests
 from .git_helper import GitHelper
 from .manifests import ManifestHeader, ManifestInterface
-
 
 logger = logging.getLogger(__name__)
 
@@ -65,6 +65,8 @@ def create_manifest_file(
         wiki_path,
         f"manifests/{short_image_name}-{commit_hash_tag}.md",
     )
+    if not os.path.isdir(os.path.join(wiki_path, "manifests")):
+        os.mkdir(os.path.join(wiki_path, "manifests"))
 
     markdown_pieces = [
         ManifestHeader.create_header(short_image_name, owner, BUILD_TIMESTAMP)
