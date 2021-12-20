@@ -94,7 +94,7 @@ class CondaPackageHelper:
         # Filtering packages installed through pip in this case it's a dict {'pip': ['toree==0.3.0']}
         # Since we only manage packages installed through mamba here
         dependencies = filter(lambda x: isinstance(x, str), dependencies)
-        packages_dict = dict()
+        packages_dict = {}
         for split in map(lambda x: re.split("=?=", x), dependencies):
             # default values
             package = split[0]
@@ -134,7 +134,7 @@ class CondaPackageHelper:
         specs = self.specified_packages()
         installed = self.installed_packages()
         available = self.available_packages()
-        self.comparison = list()
+        self.comparison = []
         for pkg, inst_vs in installed.items():
             if not specifications_only or pkg in specs:
                 avail_vs = sorted(
