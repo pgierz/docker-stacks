@@ -12,7 +12,6 @@ OWNER?=jupyter
 # - linux/amd64
 # - linux/arm64
 MULTI_IMAGES:= \
-		""
 # Images that can only be built on the amd64 architecture (aka. x86_64)
 AMD64_ONLY_IMAGES:= \
 	datascience-viz-notebook 
