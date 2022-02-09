@@ -1,9 +1,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-# Ubuntu 20.04 (focal)
-# https://hub.docker.com/_/ubuntu/?tab=tags&name=focal
-ARG ROOT_CONTAINER=ubuntu:focal
+# Modifications by Paul Gierz to set base image to centos7
+
+# Centos7
+# https://hub.docker.com/layers/centos/library/centos/centos7/
+ARG ROOT_CONTAINER=centos:centos7
 
 FROM $ROOT_CONTAINER
 
@@ -24,20 +26,18 @@ USER root
 #   https://github.com/krallin/tini#why-tini for details.
 # - apt-get upgrade is run to patch known vulnerabilities in apt-get packages as
 #   the ubuntu base image is rebuilt too seldom sometimes (less than once a month)
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update --yes && \
-    apt-get upgrade --yes && \
-    apt-get install --yes --no-install-recommends \
+RUN yum -y makecache
+RUN yum -y upgrade
+RUN yum -y install \
     tini \
     wget \
     ca-certificates \
     sudo \
     locales \
     fonts-liberation \
-    run-one && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
-    locale-gen
+    run-one
+RUN yum -y clean all
+#RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8
 
 # Configure environment
 ENV CONDA_DIR=/opt/conda \

@@ -1,7 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-ARG OWNER=jupyter
-ARG BASE_CONTAINER=$OWNER/scipy-notebook
+ARG OWNER=pgierz
+ARG BASE_CONTAINER=$OWNER/scipy-notebook:centos7
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -18,12 +18,11 @@ USER root
 ARG julia_version="1.7.0"
 
 # R pre-requisites
-RUN apt-get update --yes && \
-    apt-get install --yes --no-install-recommends \
-    fonts-dejavu \
-    gfortran \
-    gcc && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN yum -y upgrade
+RUN yum -y install dejavu-fonts-common 
+RUN yum -y install gcc-gfortran
+RUN yum -y install gcc
+RUN yum -y clean all
 
 # Julia dependencies
 # install Julia packages in /opt/julia instead of ${HOME}
